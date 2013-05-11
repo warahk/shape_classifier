@@ -2,19 +2,15 @@
 # -*- coding: utf-8 -*-
 
 """
-ZetCode PyQt4 tutorial 
-
-This program shows a confirmation 
-message box when we click on the close
-button of the application window. 
-
-author: Jan Bodnar
-website: zetcode.com 
-last edited: October 2011
+Program        shape_classifier
+Authors        Dustin Delmer, Kyle Maysey, David Robison.
+Date            05/11/2013
+Description    Takes an image of a shape from file and attempts to identify the shape.
 """
 
 import sys
 from PyQt4 import QtGui, QtCore
+import mock_khyle
 
 
 class Example(QtGui.QWidget):
@@ -24,8 +20,8 @@ class Example(QtGui.QWidget):
         
         self.initUI()
         
-    def initUI(self):
-                       
+    def initUI(self):         
+              
         grid = QtGui.QGridLayout()
         grid.setSpacing(10)
 
@@ -52,15 +48,21 @@ class Example(QtGui.QWidget):
         
         # Adds the classify button
         btn = QtGui.QPushButton('Identify Shape')
-        btn.clicked.connect(QtCore.QCoreApplication.instance().quit)
+        btn.clicked.connect(self.determineShape)
         btn.setToolTip('Classify shape of image specified by system path')
         grid.addWidget(btn,2,1)
         
         
-        # This is where image will display
-        label = QtGui.QLabel()
-        grid.addWidget(label,5,0) 
+        # Output
+                
+        # Shape
+        self.lbl_classifiedAs = QtGui.QLabel('Classified as:')
+        grid.addWidget(self.lbl_classifiedAs,3,1)
+        fontOutput1 = QtGui.QFont('Calibri', 14, QtGui.QFont.Light)
+        self.lbl_classifiedAs.setFont(fontOutput1)      
+
     
+        # Main window properties
         self.resize(500, 400)
         self.setLayout(grid)   
         self.setWindowTitle('Shape Identifier')   
@@ -78,10 +80,23 @@ class Example(QtGui.QWidget):
                         "Cannot load %s.  Make sure you have the right path and you have selected an image." % fileName)
                 return
             
+            # Sets the image
             self.img_shape.setPixmap(QtGui.QPixmap(fileName))
             self.img_shape.show()
             
+            # Sets the file path to image on text box.
             self.filePath.setText(fileName)
+            
+    def determineShape(self):
+        
+        # Check to see if image has been selected.
+        fileName = self.filePath.text()
+        
+        if (fileName == ""):
+            return
+        
+        shape = mock_khyle.classifier()
+        self.lbl_classifiedAs.setText('Classified as: %s!' % shape)
         
     
     def center(self):
