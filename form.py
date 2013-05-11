@@ -29,34 +29,32 @@ class Example(QtGui.QWidget):
         grid = QtGui.QGridLayout()
         grid.setSpacing(10)
 
+        # Label for the first row
+        lbl_filePath = QtGui.QLabel('Filepath:')
+        grid.addWidget(lbl_filePath,0,0)
+
         # Display the file path in a label
         self.filePath = QtGui.QLineEdit()
-        grid.addWidget(self.filePath,0,0)
-        
-        #imageEdit = QtGui.QLineEdit()
-        #grid.addWidget(imageEdit,0,0)
-        
-        featureOne = QtGui.QLabel('Edges:')
-        grid.addWidget(featureOne,1,0)
-        featureTwo = QtGui.QLabel('Average Angle:')
-        grid.addWidget(featureTwo,2,0)
-        featureThree = QtGui.QLabel('Angle Variance:')
-        grid.addWidget(featureThree,3,0)
-        
-        equation = QtGui.QLabel('P(X|C1) = i1231o23j1o')
-        grid.addWidget(equation,4,0)
+        grid.addWidget(self.filePath,0,1)
         
         # Adds the image select button
         btn_imgSelect = QtGui.QPushButton('Select Image')
         btn_imgSelect.clicked.connect(self.open)
         btn_imgSelect.setToolTip('Identify the image you would like to detect from.')
-        grid.addWidget(btn_imgSelect,0,1)        
+        grid.addWidget(btn_imgSelect,0,2)
+        
+        
+        # Display image
+        self.img_shape = QtGui.QLabel(self)
+        self.img_shape.setGeometry(10, 10, 400, 100)
+        grid.addWidget(self.img_shape,1,1)        
+        
         
         # Adds the classify button
         btn = QtGui.QPushButton('Identify Shape')
         btn.clicked.connect(QtCore.QCoreApplication.instance().quit)
         btn.setToolTip('Classify shape of image specified by system path')
-        grid.addWidget(btn,1,1)
+        grid.addWidget(btn,2,1)
         
         
         # This is where image will display
@@ -80,19 +78,10 @@ class Example(QtGui.QWidget):
                         "Cannot load %s.  Make sure you have the right path and you have selected an image." % fileName)
                 return
             
-            self.filePath.setText(fileName)
-
-            #self.imageLabel.setPixmap(QtGui.QPixmap.fromImage(image))
-            #self.scaleFactor = 1.0
-
-            #self.printAct.setEnabled(True)
-            #self.fitToWindowAct.setEnabled(True)
-            #self.updateActions()
+            self.img_shape.setPixmap(QtGui.QPixmap(fileName))
+            self.img_shape.show()
             
-            #self.imageEdit.setText(fileName)
-
-            if not self.fitToWindowAct.isChecked():
-                self.imageLabel.adjustSize()
+            self.filePath.setText(fileName)
         
     
     def center(self):
