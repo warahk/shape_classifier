@@ -10,7 +10,7 @@ Description    Takes an image of a shape from file and attempts to identify the 
 
 import sys
 from PyQt4 import QtGui, QtCore
-import mock_khyle
+import TestFeature
 
 
 class Example(QtGui.QWidget):
@@ -95,7 +95,7 @@ class Example(QtGui.QWidget):
         if (fileName == ""):
             return
         
-        shape = mock_khyle.classifier()
+        shape = TestFeature.main(str(fileName), int(2))
         self.lbl_classifiedAs.setText('Classified as: %s!' % shape)
         
     

@@ -151,19 +151,21 @@ def acquire_features(fname):
     return [numCorner, astd, rmean]
 ##############End of acquire_features#############
 
-def main():
+def main(filename, neighbors):
     """Driver for knn search of our design data"""
 
-    fvec = acquire_features('Images\AcuteT.png')
+    fvec = acquire_features(filename)
 
-    neighbors = int(raw_input("How many neighbors: "))
+    #neighbors = int(raw_input("How many neighbors: "))
+    #neighbors = 2
     data = []
 
     with open("sDesignData.txt") as tsv:
         for line in csv.reader(tsv, delimiter="\t"):
             data.append(line)
 
-    print knn_search(fvec, data, neighbors)
+    #print knn_search(fvec, data, neighbors)
+    return  knn_search(fvec, data, neighbors)
 
 if __name__ == "__main__":
     main()
