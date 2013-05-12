@@ -12,6 +12,7 @@ import sys
 from PyQt4 import QtGui, QtCore
 import TestFeature
 
+from scipy.sparse.csgraph import _validation
 
 class Example(QtGui.QWidget):
     
@@ -43,7 +44,7 @@ class Example(QtGui.QWidget):
         # Display image
         self.img_shape = QtGui.QLabel(self)
         self.img_shape.setGeometry(10, 10, 400, 100)
-        grid.addWidget(self.img_shape,1,1)        
+        grid.addWidget(self.img_shape,1,1)       
         
         
         # Adds the classify button
@@ -81,7 +82,9 @@ class Example(QtGui.QWidget):
                 return
             
             # Sets the image
-            self.img_shape.setPixmap(QtGui.QPixmap(fileName))
+            myPixmap = QtGui.QPixmap(fileName)
+            myScaledPixmap = myPixmap.scaled(self.img_shape.size())
+            self.img_shape.setPixmap(QtGui.QPixmap(myScaledPixmap))
             self.img_shape.show()
             
             # Sets the file path to image on text box.
