@@ -64,7 +64,7 @@ class Example(QtGui.QWidget):
 
     
         # Main window properties
-        self.resize(500, 400)
+        self.resize(350, 350)
         self.setLayout(grid)   
         self.setWindowTitle('Shape Identifier')   
         self.setWindowIcon(QtGui.QIcon('small_icon.png')) 
@@ -82,6 +82,7 @@ class Example(QtGui.QWidget):
                 return
             
             # Sets the image
+
             myPixmap = QtGui.QPixmap(fileName)
             myScaledPixmap = myPixmap.scaled(self.img_shape.size())
             self.img_shape.setPixmap(QtGui.QPixmap(myScaledPixmap))
@@ -98,7 +99,7 @@ class Example(QtGui.QWidget):
         if (fileName == ""):
             return
         
-        shape = TestFeature.main(str(fileName), int(2))
+        shape = TestFeature.main(str(fileName), int(4))
         self.lbl_classifiedAs.setText('Classified as: %s!' % shape)
         
     

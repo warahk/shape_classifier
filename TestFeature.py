@@ -1,9 +1,10 @@
 from scipy import stats
 import numpy as np
-import Image
+#import Image
 import Harris
 import math
 import csv
+from PIL import Image
 
 objList = ["Acute",
            "Hexagon",
@@ -84,8 +85,12 @@ def knn_search(x, D, K):
 ##  Output:     Feature vector of image in python list
 ######################################################
 def acquire_features(fname):
-
-    im = np.array(Image.open(fname).convert("L"))
+    
+    image = Image.open(fname)
+    image.thumbnail((500,500), Image.ANTIALIAS)
+    #image.save("/thumbnail_%s" % fname, 'JPEG', quality=88)
+    im = np.array(image.convert("L"))
+    #im = np.array(Image.open("thumbnail_%s" % fname).convert("L"))
 
     imThresh = stats.threshold(im, 0, 140, 255)
 
