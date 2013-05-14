@@ -57,7 +57,7 @@ class Example(QtGui.QWidget):
         # Output
                 
         # Shape
-        self.lbl_classifiedAs = QtGui.QLabel('Classified as:')
+        self.lbl_classifiedAs = QtGui.QLabel('')
         grid.addWidget(self.lbl_classifiedAs,3,1)
         fontOutput1 = QtGui.QFont('Calibri', 14, QtGui.QFont.Light)
         self.lbl_classifiedAs.setFont(fontOutput1)      
@@ -82,25 +82,29 @@ class Example(QtGui.QWidget):
                 return
             
             # Sets the image
-
-            myPixmap = QtGui.QPixmap(fileName)
-            myScaledPixmap = myPixmap.scaled(self.img_shape.size())
-            self.img_shape.setPixmap(QtGui.QPixmap(myScaledPixmap))
+            myPixmap = QtGui.QPixmap(fileName).scaled(self.img_shape.size(), QtCore.Qt.KeepAspectRatio)
+            self.img_shape.setPixmap(QtGui.QPixmap(myPixmap))
+            
             self.img_shape.show()
             
             # Sets the file path to image on text box.
             self.filePath.setText(fileName)
             
-    def determineShape(self):
+            # Clear shape text
+            self.lbl_classifiedAs.setText('')            
+            
+    def determineShape(self):  
         
         # Check to see if image has been selected.
         fileName = self.filePath.text()
         
         if (fileName == ""):
             return
-        
-        shape = TestFeature.main(str(fileName), int(4))
-        self.lbl_classifiedAs.setText('Classified as: %s!' % shape)
+        try:
+            shape = TestFeature.main(str(fileName), int(4))
+            self.lbl_classifiedAs.setText('Classified as: %s!' % shape)
+        except(ZeroDivisionError):
+            self.lbl_classifiedAs.setText('Unable to detect!')
         
     
     def center(self):
