@@ -170,7 +170,7 @@ def main(filename, neighbors):
             data.append(line)
 
     #print knn_search(fvec, data, neighbors)
-    return  knn_search(fvec, data, neighbors)
+    return  fvec, knn_search(fvec, data, neighbors)
 
 if __name__ == "__main__":
     main()

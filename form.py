@@ -27,7 +27,7 @@ class Example(QtGui.QWidget):
         grid.setSpacing(10)
 
         # Label for the first row
-        lbl_filePath = QtGui.QLabel('Filepath:')
+        lbl_filePath = QtGui.QLabel('<b>Filepath:</b>')
         grid.addWidget(lbl_filePath,0,0)
 
         # Display the file path in a label
@@ -55,12 +55,40 @@ class Example(QtGui.QWidget):
         
         
         # Output
-                
-        # Shape
+        
+        # Shape feature labels
+        fontOutput1 = QtGui.QFont('Calibri', 11, QtGui.QFont.Light)
+        fontOutput2 = QtGui.QFont('Calibri', 12, QtGui.QFont.Light)
+        
+        self.lbl_features = QtGui.QLabel('<u><b>Image Features</b></u>')
+        grid.addWidget(self.lbl_features,3,1)
+        self.lbl_features.setFont(fontOutput2)
+        self.lbl_features.show()        
+        
+        self.lbl_corners = QtGui.QLabel('')
+        grid.addWidget(self.lbl_corners,4,1)       
+        self.lbl_corners.setFont(fontOutput1)
+       
+        self.lbl_angle = QtGui.QLabel('')
+        grid.addWidget(self.lbl_angle,5,1)
+        self.lbl_angle.setFont(fontOutput1)
+        
+        self.lbl_sides = QtGui.QLabel('')
+        grid.addWidget(self.lbl_sides,6,1)   
+        self.lbl_sides.setFont(fontOutput1)          
+        
+        # Shape result label
+        self.lbl_features = QtGui.QLabel('<u><b>Result</b></u>')
+        grid.addWidget(self.lbl_features,7,1)
+        self.lbl_features.setFont(fontOutput2)
+        self.lbl_features.show()        
+        
         self.lbl_classifiedAs = QtGui.QLabel('')
-        grid.addWidget(self.lbl_classifiedAs,3,1)
-        fontOutput1 = QtGui.QFont('Calibri', 14, QtGui.QFont.Light)
-        self.lbl_classifiedAs.setFont(fontOutput1)      
+        grid.addWidget(self.lbl_classifiedAs,8,1)
+        
+        self.lbl_classifiedAs.setFont(fontOutput1) 
+        
+        
 
     
         # Main window properties
@@ -101,8 +129,12 @@ class Example(QtGui.QWidget):
         if (fileName == ""):
             return
         try:
-            shape = TestFeature.main(str(fileName), int(4))
-            self.lbl_classifiedAs.setText('Classified as: %s!' % shape)
+            fvec, shape = TestFeature.main(str(fileName), int(4))
+            self.lbl_classifiedAs.setText('<b>Classified as:</b>     %s!' % shape)
+            self.lbl_corners.setText('<b>Number of corners:</b>     %s' % fvec[0])
+            self.lbl_angle.setText('<b>Average angle deviation:</b>     %s' % fvec[1])
+            self.lbl_sides.setText('<b>Maximum side ratio:</b>     %s' % fvec[2])
+            
         except(ZeroDivisionError):
             self.lbl_classifiedAs.setText('Unable to detect!')
         
