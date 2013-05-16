@@ -43,8 +43,9 @@ class Example(QtGui.QWidget):
         
         # Display image
         self.img_shape = QtGui.QLabel(self)
-        self.img_shape.setGeometry(10, 10, 400, 100)
-        grid.addWidget(self.img_shape,1,1)       
+        grid.addWidget(self.img_shape,1,1) 
+        grid.setRowStretch(1,1)
+        grid.setColumnStretch(1,1)     
         
         
         # Adds the classify button
@@ -57,8 +58,8 @@ class Example(QtGui.QWidget):
         # Output
         
         # Shape feature labels
-        fontOutput1 = QtGui.QFont('Calibri', 11, QtGui.QFont.Light)
-        fontOutput2 = QtGui.QFont('Calibri', 12, QtGui.QFont.Light)
+        fontOutput1 = QtGui.QFont('Calibri', 12, QtGui.QFont.Light)
+        fontOutput2 = QtGui.QFont('Calibri', 14, QtGui.QFont.Light)
         
         self.lbl_features = QtGui.QLabel('<u><b>Image Features</b></u>')
         grid.addWidget(self.lbl_features,3,1)
@@ -86,18 +87,17 @@ class Example(QtGui.QWidget):
         self.lbl_classifiedAs = QtGui.QLabel('')
         grid.addWidget(self.lbl_classifiedAs,8,1)
         
-        self.lbl_classifiedAs.setFont(fontOutput1) 
+        self.lbl_classifiedAs.setFont(fontOutput1)   
         
-        
-
     
         # Main window properties
-        self.resize(350, 350)
+        self.resize(500, 500)
         self.setLayout(grid)   
         self.setWindowTitle('Shape Identifier')   
         self.setWindowIcon(QtGui.QIcon('small_icon.png')) 
         self.show()
         self.center()
+    
         
     def open(self):
         fileName = QtGui.QFileDialog.getOpenFileName(self, "Open File",
