@@ -69,9 +69,9 @@ class Example(QtGui.QWidget):
         grid.addWidget(self.lbl_corners,4,1)       
         self.lbl_corners.setFont(fontOutput1)
        
-        self.lbl_angle = QtGui.QLabel('')
-        grid.addWidget(self.lbl_angle,5,1)
-        self.lbl_angle.setFont(fontOutput1)
+        self.lbl_angles = QtGui.QLabel('')
+        grid.addWidget(self.lbl_angles,5,1)
+        self.lbl_angles.setFont(fontOutput1)
         
         self.lbl_sides = QtGui.QLabel('')
         grid.addWidget(self.lbl_sides,6,1)   
@@ -119,7 +119,10 @@ class Example(QtGui.QWidget):
             self.filePath.setText(fileName)
             
             # Clear shape text
-            self.lbl_classifiedAs.setText('')            
+            self.lbl_classifiedAs.setText('')
+            self.lbl_corners.setText('') 
+            self.lbl_sides.setText('') 
+            self.lbl_angles.setText('')             
             
     def determineShape(self):  
         
@@ -132,7 +135,7 @@ class Example(QtGui.QWidget):
             fvec, shape = TestFeature.main(str(fileName), int(4))
             self.lbl_classifiedAs.setText('<b>Classified as:</b>     %s!' % shape)
             self.lbl_corners.setText('<b>Number of corners:</b>     %s' % fvec[0])
-            self.lbl_angle.setText('<b>Average angle deviation:</b>     %s' % fvec[1])
+            self.lbl_angles.setText('<b>Average angle deviation:</b>     %s' % fvec[1])
             self.lbl_sides.setText('<b>Maximum side ratio:</b>     %s' % fvec[2])
             
         except(ZeroDivisionError):
